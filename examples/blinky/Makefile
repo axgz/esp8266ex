@@ -25,7 +25,7 @@ ${TARGET}.elf: ${OBJ}
 
 install: flash
 
-flash: ${TARGET}-
+flash: ${TARGET}.elf-0x?0000.bin
 	${ESPTOOL} -p ${DEV} write_flash 0x00000 ${TARGET}-0x00000.bin 0x10000 ${TARGET}-0x10000.bin
 
 erase: 
@@ -33,4 +33,4 @@ erase:
 	${ESPTOOL} -p ${DEV} write_flash 0x3fc000 ${SDK}/bin/esp_init_data_default.bin
 
 clean:
-	rm -fv ${OBJ} ${TARGET} $(TARGET).elf-0x?0000.bin
+	rm -fv ${OBJ} ${TARGET}.elf $(TARGET).elf-0x?0000.bin
