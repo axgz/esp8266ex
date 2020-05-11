@@ -14,10 +14,10 @@ TARGET = blinky
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 
-${TARGET}-: ${TARGET}
-	${ESPTOOL} elf2image $^ -o $@
+${TARGET}.elf-0x?0000.bin: ${TARGET}.elf
+	${ESPTOOL} elf2image $^
 
-${TARGET}: ${OBJ}
+${TARGET}.elf: ${OBJ}
 	${CC} ${LDLIBS} ${LDFLAGS} $^ -o $@
 
 %.o: %.c
@@ -33,4 +33,4 @@ erase:
 	${ESPTOOL} -p ${DEV} write_flash 0x3fc000 ${SDK}/bin/esp_init_data_default.bin
 
 clean:
-	rm -fv ${OBJ} ${TARGET} $(TARGET)-0x?0000.bin
+	rm -fv ${OBJ} ${TARGET} $(TARGET).elf-0x?0000.bin
